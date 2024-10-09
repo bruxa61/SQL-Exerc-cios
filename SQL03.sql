@@ -1,44 +1,53 @@
---QUEST√O 1
+--QUEST√ÉO 1
 SELECT
 SUM(SalesQuantity) AS 'Qtd. Vendida'
-FROM FactSales
-
-SELECT
 SUM(ReturnQuantity) AS 'Qtd. Devolvida'
 FROM FactSales
+WHERE channelKey = 1
 
---QUEST√O 2
+--QUEST√ÉO 2
 SELECT
-AVG(YearlyIncome) AS 'MÈdia Salarial'
+AVG(YearlyIncome) AS 'M√©dia Salarial'
 FROM DimCustomer
 WHERE Occupation = 'Professional'
 
---QUEST√O 3
+--QUEST√ÉO 3
 --A
 SELECT
-MAX(EmployeeCount) AS 'Max. de Funcion·rios'
+MAX(EmployeeCount) AS 'Max. de Funcion√°rios'
 FROM DimStore
 
 --B
-SELECT
-StoreName
+SELECT TOP(1)
+StoreName,
+EmployeeCount
 FROM DimStore
-WHERE EmployeeCount = '325'
+ORDER BY EmployeeCount DESC
+-- SELECT
+-- StoreName
+-- FROM DimStore
+-- WHERE EmployeeCount = '325'
 --R: Contoso North America Online Store
 
 --C
 SELECT
-MIN(EmployeeCount) AS 'Min. de Funcion·rios'
+MIN(EmployeeCount) AS 'Min. de Funcion√°rios'
 FROM DimStore
 
 --D
-SELECT
-StoreName
+SELECT TOP(1)
+StoreName,
+EmployeeCount
 FROM DimStore
-WHERE EmployeeCount = '7'
+WHERE EmployeeCount IS NOT NULL
+ORDER BY EmployeeCount ASC
+-- SELECT
+-- StoreName
+-- FROM DimStore
+-- WHERE EmployeeCount = '7'
 --R: Contoso Europe Online Store
 
---QUEST√O 4
+--QUEST√ÉO 4
 --A
 SELECT
 COUNT(EmployeeKey) AS 'Qtd. Mulheres'
@@ -80,7 +89,7 @@ FROM DimEmployee
 WHERE HireDate = '1998-01-26'
 
 
---QUEST√O 5
+--QUEST√ÉO 5
 --A
 SELECT
 COUNT(DISTINCT ColorName) AS 'Qtd. de Cores'

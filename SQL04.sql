@@ -19,7 +19,7 @@ SELECT
 channelKey,
 SUM(SalesAmount) AS 'Total Produto'
 FROM FactSales
-WHERE DateKey = '2007'
+WHERE DateKey BETWEEN '01/01/2007' AND '31/12/2007'
 GROUP BY channelKey
 ORDER BY channelKey
 

@@ -1,4 +1,4 @@
---Questão 01
+--QuestÄƒo 01
 SELECT
 ProductSubcategoryName,
 DimProductSubcategory.ProductSubcategoryKey
@@ -6,7 +6,7 @@ FROM DimProductSubcategory
 INNER JOIN DimProduct 
 ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
 
---Questão 02
+--QuestÄƒo 02
 SELECT
 ProductCategoryName,
 DimProductCategory.ProductCategoryKey
@@ -14,7 +14,7 @@ FROM DimProductCategory
 LEFT JOIN DimProductSubcategory
 ON DimProductCategory.ProductCategoryKey = DimProductSubcategory.ProductCategoryKey
 
---Questão 03
+--QuestÄƒo 03
 SELECT
 StoreKey,
 StoreName,
@@ -26,7 +26,7 @@ FROM DimStore
 LEFT JOIN DimGeography
 ON Dimstore.GeographyKey = DimGeography.GeographyKey
 
---Questão 04
+--QuestÄƒo 04
 SELECT
 ProductKey,
 ProductName,
@@ -38,3 +38,10 @@ LEFT JOIN DimProductSubcategory
 ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
 LEFT JOIN DimProductCategory
 ON DimProductCategory.ProductCategoryKey = DimProductSubcategory.ProductCategoryKey
+
+--QuestÃ£o 05
+--A
+SELECT TOP(1000)*
+FROM FactStrategyPlan
+
+--B

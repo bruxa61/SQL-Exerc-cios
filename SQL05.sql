@@ -45,3 +45,8 @@ SELECT TOP(1000)*
 FROM FactStrategyPlan
 
 --B
+SELECT
+StrategyPlanKey,
+DateKey,
+AccountName,
+Amount

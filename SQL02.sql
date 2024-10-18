@@ -1,130 +1,110 @@
---QUESTÃO 1
-SELECT TOP (100)
-SalesAmount,
-FROM FactSales
-ORDER BY SalesAmount DESC
-
---QUESTÃO 2
-SELECT TOP (10)
-ProductName,
-Weight,
-AvailableForSaleDate,
---StyleID,
-UnitPrice
+--Questăo 01
+SELECT
+ProductSubcategoryName,
+DimProductSubcategory.ProductSubcategoryKey
 FROM DimProduct
-ORDER BY UnitPrice DESC, Weight DESC, AvailableForSaleDate ASC
--- ORDER BY UnitPrice DESC, Weight DESC, StyleID DESC
+INNER JOIN DimProductSubcategory 
+ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
 
---QUESTÃO 3
---A
+--Questăo 02
 SELECT
-ProductName,
-Weight
-FROM DimProduct
-WHERE Weight > 100
+ProductCategoryName,
+DimProductCategory.ProductCategoryKey
+FROM DimProductCategory
+LEFT JOIN DimProductSubcategory
+ON DimProductCategory.ProductCategoryKey = DimProductSubcategory.ProductCategoryKey
 
---B
+--Questăo 03
 SELECT
-ProductName AS 'Nome do Produto',
-Weight AS Peso
-FROM DimProduct
-
---C
-SELECT
-ProductName,
-Weight
-FROM DimProduct
-WHERE Weight > 100
-ORDER BY Weight DESC
-
---QUESTÃO 4
---A
-SELECT 
-StoreName, 
-OpenDate, 
-EmployeeCount
-FROM DimStore
-
---B
-SELECT 
-StoreName AS 'Nome da Loja', 
-OpenDate AS 'Data de Abertura', 
-EmployeeCount AS 'Quantidade de Funcionários'
-FROM DimStore
-
---C
-SELECT 
+StoreKey,
 StoreName,
-Status
+EmployeeCount,
+DimGeography.ContinentName,
+DimGeography.RegionCountryName
+--DimStore.GeographyKey
 FROM DimStore
-WHERE StoreType = 'Store' AND Status = 'On'
+LEFT JOIN DimGeography
+ON Dimstore.GeographyKey = DimGeography.GeographyKey
 
---QUESTÃO 5
-SELECT 
-BrandName,
-AvailableForSaleDate,
-ProductKey
-FROM DimProduct
-WHERE BrandName = 'Litware' AND AvailableForSaleDate = '15/03/2009'
-
---QUESTÃO 6
---A
+--Questăo 04
 SELECT
-StoreName,
-Status
-FROM DimStore
-WHERE Status LIKE 'OFF'
-
---B
-SELECT 
-StoreName,
-CloseDate
-FROM DimStore
-Where CloseDate IS NOT NULL
-
---QUESTÃO 7
-SELECT
-StoreName,
-EmployeeCount
-FROM DimStore
-WHERE EmployeeCount BETWEEN 1 AND 20
---R:75 Lojas receberão 1 máquina de café
-
-SELECT
-StoreName,
-EmployeeCount
-FROM DimStore
-WHERE EmployeeCount BETWEEN 21 AND 50
---R:187 Lojas receberão 2 máquinas de café
-
-SELECT
-StoreName,
-EmployeeCount
-FROM DimStore
-WHERE EmployeeCount > 50
---R:43 Lojas receberão 3 máquinas de café
-
---QUESTÃO 8
-SELECT 
-ProductDescription,
 ProductKey,
-UnitPrice
+ProductName,
+DimProductCategory.ProductCategoryDescription,
+DimProductSubcategory.ProductCategoryKey,
+DimProduct.ProductSubcategoryKey
 FROM DimProduct
-WHERE ProductDescription LIKE '%LCD%'
+LEFT JOIN DimProductSubcategory
+ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
+LEFT JOIN DimProductCategory
+ON DimProductCategory.ProductCategoryKey = DimProductSubcategory.ProductCategoryKey
 
---QUESTÃO 9
+--Questão 05
+--A
+SELECT TOP(1000)*
+FROM FactStrategyPlan
+
+--B
 SELECT
-ProductName,
-ColorName,
-BrandName
-FROM DimProduct
-WHERE ColorName IN ('Green', 'Orange', 'Black', 'Silver', 'Pink') AND BrandName IN ('Contoso', 'Litware', 'Fabrikam')
+StrategyPlanKey,
+DateKey,
+DimAccount.AccountName,
+Amount
+FROM FactStrategyPlan
+INNER JOIN DimAccount
+ON FactStrategyPlan.AccountKey = DimAccount.AccountKey
 
---QUESTÃO 10
+--Questão 06
+SELECT
+StrategyPlanKey,
+DateKey,
+DimScenario.ScenarioName,
+Amount
+FROM FactStrategyPlan
+INNER JOIN DimScenario
+ON FactStrategyPlan.ScenarioKey = DimScenario.ScenarioKey
+
+--Questão 07
+SELECT
+ProductSubcategoryName,
+DimProduct.ProductSubcategoryKey
+FROM DimProductSubcategory
+LEFT JOIN DimProduct
+ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
+WHERE DimProduct.ProductKey IS NULL;
+
+--Questão 08
+SELECT
+DISTINCT DimProduct.BrandName,
+DimChannel.ChannelName
+FROM DimProduct 
+CROSS JOIN DimChannel
+WHERE BrandName IN ('Contoso', 'Fabrikam', 'Litware')
+
+--Questão 09
 SELECT 
-ProductName,
-BrandName,
-ColorName,
-UnitPrice
-FROM DimProduct
-WHERE BrandName = 'Contoso' AND ColorName = 'Silver' AND UnitPrice BETWEEN 10 AND 30
+OnlineSalesKey,
+DateKey,
+PromotionName,
+SalesAmount	
+FROM FactOnlineSales
+INNER JOIN DimPromotion
+ON FactOnlineSales.PromotionKey = DimPromotion.PromotionKey
+WHERE PromotionName <> 'No Discount'
+ORDER BY DateKey ASC
+
+--Questão 10
+SELECT
+FactSales.SalesKey,
+DimChannel.ChannelName,
+DimStore.StoreName,
+DimProduct.ProductName,
+FactSales.SalesAmount
+FROM FactSales
+INNER JOIN DimChannel
+ON FactSales.channelKey = DimChannel.ChannelKey
+INNER JOIN DimStore
+ON FactSales.StoreKey = DimStore.StoreKey
+INNER JOIN DimProduct
+ON FactSales.ProductKey = DimProduct.ProductKey
+ORDER BY FactSales.SalesAmount DESC

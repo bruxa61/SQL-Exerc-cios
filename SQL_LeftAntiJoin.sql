@@ -1,5 +1,5 @@
 --1. Primeiro:
---(Produtos que n„o foram vendidos na loja online)
+--(Produtos que n√£o foram vendidos na loja online)
 SELECT 
     ProductName, 
 	SalesAmount
@@ -11,7 +11,7 @@ WHERE
     FactOnlineSales.SalesAmount IS NULL;
 
 --2. Segundo:
---(Produtos que n„o est„o no invent·rio)
+--(Produtos que n√£o est√£o no invent√°rio)
 SELECT
 	DimProduct.ProductName,
 	FactInventory.ProductKey
@@ -25,7 +25,7 @@ WHERE
 	FactInventory.ProductKey IS NULL;
 
 --3. Terceiro
---(Continentes que n„o tem uma chave geogr·fica)
+--(Continentes que n√£o tem uma chave geogr√°fica)
 SELECT
 ContinentName,
 DimSalesTerritory.GeographyKey
@@ -35,11 +35,11 @@ DimSalesTerritory ON DimGeography.GeographyKey = DimSalesTerritory.GeographyKey
 WHERE DimSalesTerritory.GeographyKey IS NULL;
 
 --4. Quarto
---(Produtos que n„o tem uma subcategoria)
+--(Produtos que n√£o tem uma subcategoria)
 SELECT
-ProductName,
-DimProductSubcategory.ProductSubcategoryKey
-FROM DimProduct
-LEFT JOIN
-DimProductSubcategory ON DimProduct.ProductSubcategoryKey = DimProductSubcategory.ProductSubcategoryKey
-WHERE DimProductSubcategory.ProductSubcategoryKey IS NULL;
+ProductSubcategoryName,
+DimProduct.ProductSubcategoryKey
+FROM DimProductSubcategory
+LEFT JOIN DimProduct
+ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
+WHERE DimProduct.ProductSubcategoryKey IS NULL;

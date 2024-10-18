@@ -48,5 +48,42 @@ FROM FactStrategyPlan
 SELECT
 StrategyPlanKey,
 DateKey,
-AccountName,
+DimAccount.AccountName,
 Amount
+FROM FactStrategyPlan
+INNER JOIN DimAccount
+ON FactStrategyPlan.AccountKey = DimAccount.AccountKey
+
+--Questão 06
+SELECT
+StrategyPlanKey,
+DateKey,
+DimScenario.ScenarioName,
+Amount
+FROM FactStrategyPlan
+INNER JOIN DimScenario
+ON FactStrategyPlan.ScenarioKey = DimScenario.ScenarioKey
+
+--Questão 07
+SELECT
+ProductSubcategoryName,
+DimProduct.ProductSubcategoryKey
+FROM DimProductSubcategory
+LEFT JOIN DimProduct
+ON DimProductSubcategory.ProductSubcategoryKey = DimProduct.ProductSubcategoryKey
+WHERE DimProduct.ProductSubcategoryKey IS NULL;
+
+--Questão 08
+SELECT
+BrandName,
+DimChannel.ChannelName
+FROM DimProduct
+INNER JOIN FactSales
+ON FactSales.ProductKey = DimProduct.Productkey
+INNER JOIN DimChannel
+ON DimChannel.ChannelKey = FactSales.ChannelKey
+
+--Questão 09
+
+
+--Questão 10

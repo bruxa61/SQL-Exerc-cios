@@ -84,6 +84,29 @@ INNER JOIN DimChannel
 ON DimChannel.ChannelKey = FactSales.ChannelKey
 
 --Questão 09
-
+SELECT 
+OnlineSalesKey,
+DateKey,
+PromotionName,
+SalesAmount	
+FROM FactOnlineSales
+INNER JOIN DimPromotion
+ON FactOnlineSales.PromotionKey = DimPromotion.PromotionKey
+WHERE PromotionName <> 'No Discount'
+ORDER BY DateKey ASC
 
 --Questão 10
+SELECT 
+FactSales.SalesKey,
+DimChannel.ChannelName,
+DimStore.StoreName,
+DimProduct.ProductName,
+FactSales.SalesAmount
+FROM FactSales
+INNER JOIN DimChannel
+ON FactSales.channelKey = DimChannel.ChannelKey
+INNER JOIN DimStore
+ON FactSales.StoreKey = DimStore.StoreKey
+INNER JOIN DimProduct
+ON FactSales.ProductKey = DimProduct.ProductKey
+ORDER BY FactSales.SalesAmount DESC

@@ -75,16 +75,14 @@ WHERE DimProduct.ProductSubcategoryKey IS NULL;
 
 --Questão 08
 SELECT
-BrandName,
+DISTINCT DimProduct.BrandName,
 DimChannel.ChannelName
-FROM DimProduct
-INNER JOIN FactSales
-ON FactSales.ProductKey = DimProduct.Productkey
-INNER JOIN DimChannel
-ON DimChannel.ChannelKey = FactSales.ChannelKey
+FROM DimProduct 
+CROSS JOIN DimChannel
+WHERE BrandName IN ('Contoso', 'Fabrikam', 'Litware')
 
 --Questão 09
-SELECT 
+SELECT TOP(1000)
 OnlineSalesKey,
 DateKey,
 PromotionName,

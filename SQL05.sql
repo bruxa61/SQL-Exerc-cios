@@ -41,7 +41,7 @@ ON DimProductCategory.ProductCategoryKey = DimProductSubcategory.ProductCategory
 
 --Questão 05
 --A
-SELECT TOP(1000)*
+SELECT TOP(100)*
 FROM FactStrategyPlan
 
 --B

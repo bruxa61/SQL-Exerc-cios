@@ -134,13 +134,16 @@ INNER JOIN Clientes
 ON Pedidos.ClienteID = Clientes.ClienteID;
 
 --QUESTÃO 04
-SELECT COUNT(NomeCliente)
+SELECT 
+COUNT(NomeCliente)
 FROM Clientes
 UNION ALL
-SELECT COUNT(Clientes.NomeCliente)
+SELECT 
+COUNT(Clientes.NomeCliente)
 FROM Pedidos
 INNER JOIN Clientes 
 ON Pedidos.ClienteID = Clientes.ClienteID
+
 
 --QUESTÃO 05
 -- Selecionando o banco de dados para uso
@@ -215,3 +218,64 @@ ORDER BY DataPedido DESC
 --ORDER BY Pedidos.DataPedido DESC;
 
 --------------------------------------------------------------------------------------------------
+
+--QUESTÃO 06
+SELECT
+NomeCliente,
+COUNT(DISTINCT DetalhesPedidos.ProdutoID) AS 'Número de produtos'
+FROM Clientes
+INNER JOIN Pedidos
+ON Pedidos.ClienteID = Clientes.ClienteID
+INNER JOIN DetalhesPedidos
+ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
+INNER JOIN Produtos
+ON Produtos.ProdutoID = DetalhesPedidos.ProdutoID
+GROUP BY NomeCliente
+
+--QUESTÃO 07
+SELECT
+Pedidos.PedidoID,
+AVG(DetalhesPedidos.Quantidade) AS 'Média de itens'
+FROM Pedidos
+INNER JOIN DetalhesPedidos
+ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
+GROUP BY Pedidos.PedidoID
+
+--QUESTÃO 08
+SELECT
+COUNT(Pedidos.PedidoID) AS 'Total de pedidos por mês',
+YEAR(Pedidos.DataPedido) AS 'Ano',
+MONTH(Pedidos.DataPedido) AS 'Mês'
+FROM Pedidos
+GROUP BY YEAR(Pedidos.DataPedido), MONTH(Pedidos.DataPedido)
+ORDER BY YEAR(Pedidos.DataPedido) DESC
+
+--QUESTÃO 09
+SELECT
+NomeCategoria,
+SUM(DetalhesPedidos.Quantidade * Produtos.Preco) AS 'Valor total vendido'
+FROM Categorias
+INNER JOIN Produtos
+ON Categorias.CategoriaID = Produtos.CategoriaID
+INNER JOIN DetalhesPedidos
+ON Produtos.ProdutoID = DetalhesPedidos.ProdutoID
+GROUP BY NomeCategoria
+
+--QUESTÃO 10
+--ALTER TABLE Pedidos ADD Total DECIMAL(10, 2);
+
+--UPDATE Pedidos
+--SET Total = (
+--    SELECT SUM(DetalhesPedidos.Quantidade * Produtos.Preco)
+--    FROM DetalhesPedidos
+--    INNER JOIN Produtos ON DetalhesPedidos.ProdutoID = Produtos.ProdutoID
+--    WHERE DetalhesPedidos.PedidoID = Pedidos.PedidoID
+--);
+
+SELECT
+Clientes.NomeCliente,
+MAX(Pedidos.Total)AS 'Valor total do pedido'
+FROM Pedidos
+INNER JOIN Clientes
+ON Pedidos.ClienteID = Clientes.ClienteID
+GROUP BY Clientes.NomeCliente

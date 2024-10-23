@@ -103,44 +103,44 @@
 
 --EXERCÍCIOS:
 --QUESTÃO 01
---SELECT
---NomeCliente,
---Pedidos.PedidoID,
---Pedidos.DataPedido
---FROM Clientes
---INNER JOIN Pedidos
---ON Clientes.ClienteID = Pedidos.ClienteID
+SELECT
+NomeCliente,
+Pedidos.PedidoID,
+Pedidos.DataPedido
+FROM Clientes
+INNER JOIN Pedidos
+ON Clientes.ClienteID = Pedidos.ClienteID
 
 --QUESTÃO 02
---SELECT
---NomeCliente,
---Pedidos.PedidoID,
---Cidade
---FROM Clientes
---LEFT JOIN Pedidos
---ON Clientes.ClienteID = Pedidos.ClienteID
+SELECT
+NomeCliente,
+Pedidos.PedidoID,
+Cidade
+FROM Clientes
+LEFT JOIN Pedidos
+ON Clientes.ClienteID = Pedidos.ClienteID
 
 --QUESTÃO 03
---SELECT
---NomeCliente,
---Cidade
---FROM Clientes
---UNION
---SELECT 
---Clientes.NomeCliente,
---Clientes.Cidade
---FROM Pedidos
---INNER JOIN Clientes 
---ON Pedidos.ClienteID = Clientes.ClienteID;
+SELECT
+NomeCliente,
+Cidade
+FROM Clientes
+UNION
+SELECT 
+Clientes.NomeCliente,
+Clientes.Cidade
+FROM Pedidos
+INNER JOIN Clientes 
+ON Pedidos.ClienteID = Clientes.ClienteID;
 
 --QUESTÃO 04
---SELECT COUNT(NomeCliente)
---FROM Clientes
---UNION ALL
---SELECT COUNT(Clientes.NomeCliente)
---FROM Pedidos
---INNER JOIN Clientes 
---ON Pedidos.ClienteID = Clientes.ClienteID
+SELECT COUNT(NomeCliente)
+FROM Clientes
+UNION ALL
+SELECT COUNT(Clientes.NomeCliente)
+FROM Pedidos
+INNER JOIN Clientes 
+ON Pedidos.ClienteID = Clientes.ClienteID
 
 --QUESTÃO 05
 -- Selecionando o banco de dados para uso
@@ -163,35 +163,35 @@
 --(2, 3, 5),  -- Pedido 2 contém 5 unidades do Produto 3
 --(3, 2, 2);  -- Pedido 3 contém 2 unidades do Produto 2
 
---SELECT
---NomeCliente,
---Produtos.NomeProduto,
---DetalhesPedidos.Quantidade,
---Pedidos.DataPedido
---FROM Clientes
---INNER JOIN Pedidos
---ON Clientes.ClienteID = Pedidos.ClienteID
---INNER JOIN DetalhesPedidos
---ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
---INNER JOIN Produtos
---ON Produtos.ProdutoID = DetalhesPedidos.ProdutoID
---ORDER BY DataPedido DESC
+SELECT
+NomeCliente,
+Produtos.NomeProduto,
+DetalhesPedidos.Quantidade,
+Pedidos.DataPedido
+FROM Clientes
+INNER JOIN Pedidos
+ON Clientes.ClienteID = Pedidos.ClienteID
+INNER JOIN DetalhesPedidos
+ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
+INNER JOIN Produtos
+ON Produtos.ProdutoID = DetalhesPedidos.ProdutoID
+ORDER BY DataPedido DESC
 
-------------------------------------------------------------
-
+--------------------------------------------------------------------------------------------------
+--01
 --SELECT Clientes.NomeCliente, COUNT(Pedidos.PedidoID) AS TotalPedidos
 --FROM Clientes
 --LEFT JOIN Pedidos ON Clientes.ClienteID = Pedidos.ClienteID
 --GROUP BY Clientes.NomeCliente;
 
-
+--02
 --SELECT Clientes.NomeCliente, SUM(DetalhesPedidos.Quantidade) AS TotalItens
 --FROM Clientes
 --INNER JOIN Pedidos ON Clientes.ClienteID = Pedidos.ClienteID
 --INNER JOIN DetalhesPedidos ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
 --GROUP BY Clientes.NomeCliente;
 
-
+--03
 --SELECT Clientes.NomeCliente, SUM(DetalhesPedidos.Quantidade * Produtos.Preco) AS TotalGasto
 --FROM Clientes
 --INNER JOIN Pedidos ON Clientes.ClienteID = Pedidos.ClienteID
@@ -199,14 +199,14 @@
 --INNER JOIN Produtos ON DetalhesPedidos.ProdutoID = Produtos.ProdutoID
 --GROUP BY Clientes.NomeCliente;
 
-
+--04
 --SELECT Produtos.NomeProduto, SUM(DetalhesPedidos.Quantidade) AS QuantidadeVendida
 --FROM Produtos
 --INNER JOIN DetalhesPedidos ON Produtos.ProdutoID = DetalhesPedidos.ProdutoID
 --GROUP BY Produtos.NomeProduto
 --ORDER BY QuantidadeVendida DESC;
 
-
+--05
 --SELECT Pedidos.DataPedido, SUM(DetalhesPedidos.Quantidade * Produtos.Preco) AS Faturamento
 --FROM Pedidos
 --INNER JOIN DetalhesPedidos ON Pedidos.PedidoID = DetalhesPedidos.PedidoID
@@ -214,3 +214,4 @@
 --GROUP BY Pedidos.DataPedido
 --ORDER BY Pedidos.DataPedido DESC;
 
+--------------------------------------------------------------------------------------------------

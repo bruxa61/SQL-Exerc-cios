@@ -1,4 +1,4 @@
---QUEST√O 01
+--QUEST√ÉO 01
 DECLARE 
 @valor1 INT, 
 @valor2 INT,
@@ -22,19 +22,19 @@ SELECT @soma AS 'Soma'
 --B
 DECLARE @subtracao INT 
 SET @subtracao = @valor3 - @valor4 
-SELECT @subtracao AS 'SubtraÁ„o'
+SELECT @subtracao AS 'Subtra√ß√£o'
 
 --C
 DECLARE @multiplicacao INT
 SET @multiplicacao = @valor1 * @valor4
-SELECT @multiplicacao AS 'MultiplicaÁ„o'
+SELECT @multiplicacao AS 'Multiplica√ß√£o'
 
 --D
 DECLARE @divisao FLOAT
 SET @divisao = @valor3 / @valor4
-SELECT ROUND(@divisao, 2) AS 'Divis„o'
+SELECT ROUND(@divisao, 2) AS 'Divis√£o'
 
---QUEST√O 02
+--QUEST√ÉO 02
 --A
 DECLARE @produto VARCHAR(10)
 SET @produto = 'Celular'
@@ -55,42 +55,37 @@ SET @faturamento = @quantidade * @preco
 SELECT
 @produto AS 'Produto', 
 @quantidade AS 'Quantidade',
-@preco AS 'PreÁo',
+@preco AS 'Pre√ßo',
 @faturamento AS 'Faturamento'
 
---QUEST√O 03
+--QUEST√ÉO 03
 DECLARE 
 @nome VARCHAR(100),
 @data_nascimento DATETIME,
 @num_pets INT,
 @resultado VARCHAR(MAX)
-SET @nome = 'AndrÈ'
+SET @nome = 'Andr√©'
 SET @data_nascimento = '10/02/1998'
 SET @num_pets = 2
 
-SELECT 'Meu nome È ' + @nome + ', nasci em ' + FORMAT(CAST(@data_nascimento AS DATETIME), 'dd/MM/yyyy') + ' e tenho ' + CAST(@num_pets AS VARCHAR) + ' pets.'
+SELECT 'Meu nome √© ' + @nome + ', nasci em ' + FORMAT(CAST(@data_nascimento AS DATETIME), 'dd/MM/yyyy') + ' e tenho ' + CAST(@num_pets AS VARCHAR) + ' pets.'
 
---QUEST√O 04
+--QUEST√ÉO 04
 DECLARE @nome_das_lojas VARCHAR(MAX)
-SET @nome_das_lojas = (SELECT StoreName FROM DimStore WHERE CloseDate < '01/01/2009')
-
-PRINT 'As lojas fechadas no ano de 2008 foram:' + @nome_das_lojas
-
-SELECT
-StoreName,
-CloseDate
+SET @nome_das_lojas = ''
+SELECT @nome_das_lojas = @nome_das_lojas + StoreName + ', '
 FROM DimStore
 WHERE CloseDate < '01/01/2009'
 
---QUEST√O 05
-SELECT 
-ProductSubcategoryKey,
-ProductName
-FROM DimProduct
-WHERE ProductName = 'Lamps'
+PRINT 'As lojas fechadas no ano de 2008 foram:' + @nome_das_lojas
 
+--QUEST√ÉO 05
+DECLARE @consultaPorSubcategoria VARCHAR(MAX), @subCategoria VARCHAR(MAX)
+SET @subCategoria = 'Lamps'
 SELECT 
-ProductSubcategoryKey,
-ProductSubcategoryName
-FROM DimProductSubcategory
-WHERE ProductSubcategoryName = 'Lamps'
+ProductName, 
+b.ProductSubcategoryName 
+FROM DimProduct AS a 
+INNER JOIN DimProductSubcategory AS b 
+ON a.ProductSubcategoryKey = b.ProductSubcategoryKey 
+WHERE ProductSubcategoryName = @subCategoria
